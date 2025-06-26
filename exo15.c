@@ -3,16 +3,17 @@
 
 void affiche_heure(int iHeures,int iMinutes ,int iSecondes);
 void saisir_heure(int *iHeures, int *iMinutes ,int *iSecondes);
-void tick(int *iHeures,int *iMinutes ,int *iSecondes);
+void tick(int *iHeures,int *iMinutes ,int *iSecondes,int *millisecondes);
 
 int main(void){
     int iHeures,iMinutes,iSecondes;
+    int millisecondes = 0;
     saisir_heure(&iHeures, &iMinutes, &iSecondes);
     affiche_heure(iHeures,iMinutes,iSecondes);
     while (1)
     {
         affiche_heure(iHeures,iMinutes,iSecondes);
-        tick(&iHeures,&iMinutes,&iSecondes);
+        tick(&iHeures,&iMinutes,&iSecondes, &millisecondes);
         system("cls");
     }
     return 0;
@@ -51,16 +52,21 @@ void saisir_heure(int *iHeures,int *iMinutes ,int *iSecondes){
     scanf("%d", iSecondes);
 }
 
-void tick(int *iHeures,int *iMinutes ,int *iSecondes){
+void tick(int *iHeures,int *iMinutes ,int *iSecondes, int *millisecondes){
+    if (*millisecondes >= 60)
+    {
+        *millisecondes = 0;
+        (*iSecondes)++;
+    }
+    else
+    {
+        (*millisecondes)++;
+    }
     if (*iSecondes >= 60)
     {
         *iSecondes = 0;
         (*iMinutes)++;
-    }else
-    {
-        (*iSecondes)++;
     }
-    
     if (*iMinutes >= 60)
     {
         *iMinutes = 0;
